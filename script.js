@@ -1,5 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Gestion du menu mobile (Burger Menu)
+// --- EFFET MACHINE À ÉCRIRE VERSION TURBO ---
+    const textElement = document.getElementById('typewriter');
+    const phrases = [
+        "passionné par l'administration système.",
+        "passionné par l'infrastructure réseau.",
+        "passionné par la cybersécurité.",
+        "en quête d'excellence technique."
+    ];
+
+    let phraseIndex = 0;
+    let characterIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 30; // Vitesse d'écriture divisée par 2 (très rapide)
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            textElement.textContent = currentPhrase.substring(0, characterIndex - 1);
+            characterIndex--;
+            typeSpeed = 15; // Effacement quasi instantané
+        } else {
+            textElement.textContent = currentPhrase.substring(0, characterIndex + 1);
+            characterIndex++;
+            typeSpeed = 35; // Écriture nerveuse
+        }
+
+        if (!isDeleting && characterIndex === currentPhrase.length) {
+            isDeleting = true;
+            typeSpeed = 800; // Pause très courte quand la phrase est finie (0.8s)
+        } else if (isDeleting && characterIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 200; // Redémarrage quasi immédiat
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    type();
+	
+	
+	
+    // Menu mobile
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
@@ -7,88 +50,99 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-
-        // Ferme le menu après un clic sur un lien (très important pour l'expérience mobile)
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
     }
 
-    // Gestion du défilement fluide et de l'animation de surlignage
+    // Défilement fluide vers les sections
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
             const targetId = this.getAttribute('href');
-            let targetElement = null;
-
-            if (targetId === '#') {
-                // Si l'ancre est "#", la cible est le corps du document pour remonter tout en haut
-                targetElement = document.body;
-            } else {
-                // Sinon, la cible est la section avec l'ID correspondant (ex: #accueil)
-                targetElement = document.querySelector(targetId);
-            }
+            const targetElement = targetId === '#' ? document.body : document.querySelector(targetId);
 
             if (targetElement) {
-                // 1. Déclenche le défilement fluide
-                // Utilise window.scrollTo pour le retour en haut si la cible est le body
-                if (targetId === '#') {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth' 
-                    });
-                }
-
-                // 2. Gestion de l'animation visuelle du titre (highlight)
-                // L'animation n'est pertinente que si on cible une section spécifique (pas le retour simple en haut)
-                if (targetId !== '#') {
-                    // Le délai permet de s'assurer que le défilement est en cours ou terminé.
-                    setTimeout(() => {
-                        // Nettoie toute ancienne animation
-                        const previousHighlights = document.querySelectorAll('.highlight-target');
-                        previousHighlights.forEach(el => el.classList.remove('highlight-target'));
-                        
-                        // Ajoute la classe pour déclencher l'animation CSS
-                        targetElement.classList.add('highlight-target');
-
-                        // Retire la classe après la fin de l'animation CSS (2s)
-                        setTimeout(() => {
-                            targetElement.classList.remove('highlight-target');
-                        }, 2000); 
-                    }, 500); // Déclenche l'animation 0.5s après le clic
-                }
+                const targetPosition = targetElement.offsetTop;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
             }
         });
     });
 
-    // Gestion du bouton de retour en haut
+    // Bouton retour en haut
     const scrollToTopButton = document.getElementById('scroll-to-top');
-
     if (scrollToTopButton) {
-        // Afficher le bouton lorsque l'utilisateur a défilé 300px
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollToTopButton.classList.add('show');
-            } else {
-                scrollToTopButton.classList.remove('show');
-            }
+            if (window.scrollY > 300) scrollToTopButton.classList.add('show');
+            else scrollToTopButton.classList.remove('show');
         });
-
-        // Défilement fluide au clic
         scrollToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+});
+
+
+
+
+
+// --- ANIMATION APPARITION TITRES (BOUCLE INFINIE) ---
+    const observerOptions = {
+        threshold: 0.1 // Déclenche l'animation dès que 10% du titre est visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // On ajoute la classe quand le titre entre
+                entry.target.classList.add('reveal');
+            } else {
+                // On retire la classe quand le titre sort de l'écran
+                // C'est cette ligne qui permet de rejouer l'animation au retour
+                entry.target.classList.remove('reveal');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.section-title').forEach(title => {
+        sectionObserver.observe(title);
+    });
+	
+	
+	
+	
+	// On réutilise le même observateur pour les cartes de certification
+    document.querySelectorAll('.certif-card').forEach(card => {
+        sectionObserver.observe(card);
+    });
+	
+	
+	// --- GESTION DU MODE SOMBRE ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const icon = themeToggle.querySelector('i');
     
-    // NOTE: Le code pour les barres de progression a été retiré.
-});		
+    // Vérifier si l'utilisateur a déjà choisi un mode auparavant
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        icon.classList.replace('fa-moon', 'fa-sun'); // Change lune en soleil
+    }
+
+    themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        
+        if (theme === 'dark') {
+            // Repasser en mode clair
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            icon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            // Passer en mode sombre
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+    });
