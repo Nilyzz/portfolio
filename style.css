@@ -339,7 +339,7 @@ section#competences .container {
     padding-bottom: 8px;
 }
 .skills-card ul li {
-    font-size: 0.95rem; /* Taille de lecture optimale */
+    font-size: 0.80rem; /* Taille de lecture optimale */
     margin-bottom: 6px;
     list-style: none;
     padding-left: 22px;
@@ -1015,4 +1015,5 @@ footer {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
 
