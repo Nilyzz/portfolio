@@ -996,3 +996,23 @@ footer {
     }
 }
 
+.inline-project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--couleur-principale); /* Utilise ta variable de couleur */
+    color: white !important;
+    padding: 2px 10px;
+    border-radius: 4px;
+    text-decoration: none !important;
+    font-size: 0.85em;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+}
+
+.inline-project-link:hover {
+    background: var(--couleur-accent); /* Une couleur un peu plus vive au survol */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
