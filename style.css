@@ -370,6 +370,7 @@ section#competences .container {
 
 
 
+
 /* --- SECTION CERTIFICATIONS : BLOCS ÉQUILIBRÉS ET ÉLANCÉS --- */
 section#certifications {
     min-height: 100vh;
@@ -831,6 +832,7 @@ footer {
     background-color: transparent;
     color: var(--couleur-primaire) !important;
 }
+
 /* --- SECTION VEILLE --- */
 .veille-intro {
     text-align: center;
@@ -1041,4 +1043,5 @@ footer {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
 
