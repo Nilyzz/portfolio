@@ -296,6 +296,12 @@ header nav {
 }
 .timeline-item .etablissement { font-weight: 600; color: #555; font-size: 0.9em; margin-bottom: 10px; }
 .timeline-item .description { font-size: 0.85em; line-height: 1.4; color: #666; border-top: 1px solid #eee; padding-top: 10px; }
+
+
+
+
+
+
 /* --- SECTION COMPÉTENCES : ÉQUILIBRE PARFAIT --- */
 section#competences {
     min-height: 100vh;
@@ -306,13 +312,13 @@ section#competences {
 }
 section#competences .container {
     max-width: 95% !important; /* Un peu plus de marge sur les côtés */
-    width: 95% !important;
+    width: 90% !important;
 }
 .skills-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important; 
     gap: 20px;
-    height: 55vh; /* RÉDUIT : On passe de 75 à 68 pour qu'ils soient moins hauts */
+    height: 60vh; /* RÉDUIT : On passe de 75 à 68 pour qu'ils soient moins hauts */
     margin-top: 15px;
 }
 .skills-card {
@@ -354,6 +360,16 @@ section#competences .container {
     }
     section#competences { min-height: auto; }
 }
+
+
+
+
+
+
+
+
+
+
 /* --- SECTION CERTIFICATIONS : BLOCS ÉQUILIBRÉS ET ÉLANCÉS --- */
 section#certifications {
     min-height: 100vh;
@@ -458,14 +474,24 @@ section#certifications .container {
     .certifs-grid { grid-template-columns: repeat(3, 1fr) !important; }
     .certif-card { min-height: auto; }
 }
-/* Projets */
-.projets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; }
+/* Projets - Force l'alignement sur 4 colonnes */
+.projets-grid { 
+    display: grid !important; 
+    grid-template-columns: repeat(4, 1fr) !important; /* Force 4 colonnes */
+    gap: 20px; 
+    width: 100%; 
+    max-width: 1200px; /* Augmente la largeur max pour laisser de la place aux 4 cartes */
+    margin: 0 auto;
+}
+
 .projet-card {
     background-color: var(--couleur-blanc);
-    padding: 30px; border-radius: 10px;
+    padding: 20px; /* Réduit un peu le padding interne pour gagner de la place */
+    border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     border-left: 5px solid var(--couleur-accent); 
+    min-width: 0; /* Important : permet aux cartes de rétrécir si nécessaire au lieu de déborder */
 }
 .projet-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
 .projet-card .tags { color: var(--couleur-accent); font-size: 0.9em; margin-bottom: 15px; font-weight: 600; }
@@ -1015,5 +1041,4 @@ footer {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-
 
