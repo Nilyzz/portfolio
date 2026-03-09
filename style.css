@@ -1045,3 +1045,33 @@ footer {
 }
 
 
+/* --- SECTION VEILLE (Correction Boutons) --- */
+.sources-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* On applique le style directement aux liens <a> dans les sources */
+.sources-logos a {
+    background: var(--couleur-secondaire);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--couleur-bordure);
+    color: var(--couleur-texte); /* Garde la couleur de texte normale */
+    text-decoration: none;       /* Supprime le soulignement */
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Effet au survol pour montrer que c'est cliquable */
+.sources-logos a:hover {
+    background: var(--couleur-primaire);
+    color: white !important;
+    border-color: var(--couleur-primaire);
+    transform: translateY(-2px);
+}
